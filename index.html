@@ -277,6 +277,21 @@
         transform: scale(1.15);
     }
     
+    .back-btn {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 1.4em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-right: 10px;
+    }
+    
+    .back-btn:hover {
+        color: #ff9f43;
+        transform: scale(1.15);
+    }
+    
     .chat {
         flex: 1;
         padding: 20px;
@@ -387,57 +402,6 @@
     .message-media[src$=".mp4"],
     .message-media[src$=".webm"] {
         max-height: 200px;
-    }
-    
-    /* Стили для голосового сообщения */
-    
-    
-    /* Кастомизация стандартного аудиоплеера */
-    .voice-audio::-webkit-media-controls-panel {
-        background: linear-gradient(135deg, #ff577f, #ff9f43);
-        border-radius: 20px;
-        padding: 5px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    }
-    
-    .own-message .voice-audio::-webkit-media-controls-panel {
-        background: rgba(255, 255, 255, 0.15);
-    }
-    
-    .other-message .voice-audio::-webkit-media-controls-panel {
-        background: rgba(43, 27, 94, 0.1);
-    }
-    
-    .voice-audio::-webkit-media-controls-play-button,
-    .voice-audio::-webkit-media-controls-volume-slider,
-    .voice-audio::-webkit-media-controls-mute-button {
-        filter: brightness(1.2);
-    }
-    
-    .voice-audio::-webkit-media-controls-current-time-display,
-    .voice-audio::-webkit-media-controls-time-remaining-display {
-        color: #fff;
-        font-size: 0.85em;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-    }
-    
-    .other-message .voice-audio::-webkit-media-controls-current-time-display,
-    .other-message .voice-audio::-webkit-media-controls-time-remaining-display {
-        color: #2b1b5e;
-    }
-    
-    .voice-audio::-webkit-media-controls-timeline {
-        background: rgba(255, 255, 255, 0.3);
-        border-radius: 10px;
-        height: 4px;
-    }
-    
-    .voice-audio::-webkit-media-controls-timeline::-webkit-slider-thumb {
-        background: #ff9f43;
-        border-radius: 50%;
-        width: 12px;
-        height: 12px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
     
     .input-area {
@@ -567,7 +531,6 @@
         box-shadow: 0 6px 20px rgba(255, 87, 127, 0.5);
     }
     
-    /* Индикатор записи звука */
     #audioWaveform {
         width: 100%;
         height: 60px;
@@ -1158,7 +1121,6 @@
         height: 18px;
     }
     
-    /* Специфические стили для модальных окон профиля */
     #viewProfileModal .modal-content {
         padding: 15px 30px 30px 30px;
         position: relative;
@@ -1177,7 +1139,6 @@
         max-width: 220px;
     }
     
-    /* Стили для кнопок "Выйти" и "Удалить профиль" */
     #logoutButton {
         background: linear-gradient(135deg, #ff9f43, #ffcc66);
     }
@@ -1186,7 +1147,6 @@
         background: linear-gradient(135deg, #ff3d3d, #ff6b6b);
     }
     
-    /* Стили для модального окна редактирования профиля */
     #editProfileModal .modal-content {
         padding: 30px;
         padding-bottom: 80px;
@@ -1196,7 +1156,6 @@
         box-sizing: border-box;
     }
     
-    /* Ограничиваем размер изображения предпросмотра */
     #editProfilePicturePreview {
         display: block;
         max-width: 100%;
@@ -1212,7 +1171,6 @@
         transform: scale(1.02);
     }
     
-    /* Стили для кнопок в модальном окне редактирования профиля */
     #editProfileModal .modal-buttons {
         position: absolute;
         bottom: 20px;
@@ -1227,12 +1185,10 @@
         box-sizing: border-box;
     }
     
-    /* Стили для кнопки "Редактировать профиль" */
     #editProfileButton {
         background: linear-gradient(135deg, #6b48ff, #57feca);
     }
     
-    /* Стили для дополнительных элементов */
     #viewProfileModal p {
         font-size: 0.95em;
         margin: 12px 0;
@@ -1248,7 +1204,6 @@
         display: block;
     }
     
-    /* Стили для голосового предпросмотра */
     #voicePreviewModal .modal-content {
         max-width: 500px;
     }
@@ -1259,45 +1214,155 @@
         border-radius: 10px;
     }
     
-    /* Адаптивность */
     @media (max-width: 768px) {
         .container {
-            width: 95%;
-            height: 90vh;
+            width: 100%;
+            height: 100vh;
+            border-radius: 0;
+            margin: 0;
+            position: relative;
         }
     
         .sidebar {
-            width: 250px;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            transition: transform 0.3s ease;
+            transform: translateX(0);
+        }
+    
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+    
+        .messenger {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 5;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+    
+        .messenger.active {
+            transform: translateX(0);
+        }
+    
+        .header {
+            display: flex;
+            align-items: center;
+        }
+    
+        .user-actions {
+            padding: 10px;
+        }
+    
+        .menu-btn {
+            padding: 8px 15px;
+            font-size: 0.9em;
+        }
+    
+        .dropdown-menu {
+            top: 50px;
+            left: 10px;
+            width: 180px;
+        }
+    
+        .search-area input {
+            padding: 10px 35px 10px 12px;
+            font-size: 0.9em;
+        }
+    
+        .contact {
+            padding: 10px 15px;
         }
     
         .contact-avatar {
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
+            margin-right: 10px;
         }
     
         .contact-name {
             font-size: 0.9em;
         }
     
-        .header {
-            font-size: 1em;
+        .request-join-btn {
+            padding: 5px 10px;
+            font-size: 0.8em;
+        }
+    
+        .chat {
+            padding: 15px;
         }
     
         .message {
-            max-width: 80%;
+            max-width: 85%;
+            padding: 10px 15px;
+        }
+    
+        .input-area {
+            padding: 10px;
+        }
+    
+        .input-area input {
+            padding: 10px 12px;
+            font-size: 0.9em;
+            margin-right: 10px;
+        }
+    
+        .input-area button {
+            width: 45px;
+            height: 45px;
+            font-size: 1.2em;
+        }
+    
+        .media-btn {
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+    
+        .modal {
+            padding: 10px;
         }
     
         .modal-content {
-            max-width: 90%;
+            width: 95%;
+            max-height: 90vh;
+            padding: 20px;
+            overflow-y: auto;
         }
     
         .group-modal {
-            max-width: 90%;
-            padding: 25px;
+            padding: 20px;
+        }
+    
+        .modal-content h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+    
+        .modal-buttons {
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .modal-buttons button {
+            width: 100%;
+            padding: 10px;
         }
     }
     
     @media (max-width: 480px) {
+        body {
+            font-size: 14px;
+        }
+    
         .sidebar {
             width: 200px;
         }
@@ -1338,316 +1403,49 @@
             max-height: 150px;
         }
     }
-        /* Общие стили для телефонов (до 768px) */
-    @media (max-width: 768px) {
-      .container {
-        width: 100%;
-        height: 100vh;
-        border-radius: 0;
-        margin: 0;
-      }
     
-      .sidebar {
-        width: 100%;
-        height: auto;
-        position: absolute;
-        top: 0;
-        left: -100%;
-        z-index: 1000;
-        transition: left 0.3s ease;
-      }
-    
-      .sidebar.active {
-        left: 0;
-      }
-    
-      .messenger {
-        width: 100%;
-      }
-    
-      .user-actions {
-        padding: 10px;
-      }
-    
-      .menu-btn {
-        padding: 8px 15px;
-        font-size: 0.9em;
-      }
-    
-      .dropdown-menu {
-        top: 50px;
-        left: 10px;
-        width: 180px;
-      }
-    
-      .search-area input {
-        padding: 10px 35px 10px 12px;
-        font-size: 0.9em;
-      }
-    
-      .contact {
-        padding: 10px 15px;
-      }
-    
-      .contact-avatar {
-        width: 38px;
-        height: 38px;
-        margin-right: 10px;
-      }
-    
-      .contact-name {
-        font-size: 0.9em;
-      }
-    
-      .request-join-btn {
-        padding: 5px 10px;
-        font-size: 0.8em;
-      }
-    
-      .header {
-        padding: 15px;
-        font-size: 1em;
-      }
-    
-      .chat {
-        padding: 15px;
-      }
-    
-      .message {
-        max-width: 85%;
-        padding: 10px 15px;
-      }
-    
-      .input-area {
-        padding: 10px;
-      }
-    
-      .input-area input {
-        padding: 10px 12px;
-        font-size: 0.9em;
-        margin-right: 10px;
-      }
-    
-      .input-area button {
-        width: 45px;
-        height: 45px;
-        font-size: 1.2em;
-      }
-    
-      .media-btn {
-        font-size: 1.2em;
-        margin-right: 10px;
-      }
-    
-      .modal {
-        padding: 10px;
-      }
-    
-      .modal-content {
-        width: 95%;
-        max-height: 90vh;
-        padding: 20px;
-        overflow-y: auto;
-      }
-    
-      .group-modal {
-        padding: 20px;
-      }
-    
-      .modal-content h2 {
-        font-size: 1.5em;
-        margin-bottom: 15px;
-      }
-    
-      .modal-buttons {
-        flex-direction: column;
-        gap: 10px;
-      }
-    
-      .modal-buttons button {
-        width: 100%;
-        padding: 10px;
-      }
-    }
-    
-    /* Дополнительные улучшения для маленьких экранов (до 480px) */
-    @media (max-width: 480px) {
-      body {
-        font-size: 14px;
-      }
-    
-      .user-actions {
-        padding: 8px;
-      }
-    
-      .menu-btn {
-        padding: 6px 12px;
-        font-size: 0.85em;
-      }
-    
-      .dropdown-menu {
-        top: 45px;
-        width: 160px;
-        padding: 8px;
-      }
-    
-      .dropdown-menu button {
-        padding: 8px 15px;
-        font-size: 0.85em;
-      }
-    
-      .search-area {
-        padding: 8px;
-      }
-    
-      .search-area input {
-        padding: 8px 30px 8px 10px;
-        font-size: 0.85em;
-      }
-    
-      .clear-search-btn {
-        right: 20px;
-        font-size: 1em;
-      }
-    
-      .contact {
-        padding: 8px 12px;
-      }
-    
-      .contact-avatar {
-        width: 35px;
-        height: 35px;
-        margin-right: 8px;
-      }
-    
-      .contact-name {
-        font-size: 0.85em;
-      }
-    
-      #contactList {
-        padding: 5px 0;
-      }
-    
-      .header {
-        padding: 10px;
-        font-size: 0.9em;
-      }
-    
-      .header button {
-        font-size: 1.2em;
-      }
-    
-      .chat {
-        padding: 10px;
-      }
-    
-      .message {
-        padding: 8px 12px;
-        margin-bottom: 10px;
-        font-size: 0.9em;
-      }
-    
-      .message-media {
-        max-width: 150px;
-      }
-    
-      .input-area {
-        padding: 8px;
-      }
-    
-      .input-area input {
-        padding: 8px 10px;
-        font-size: 0.85em;
-      }
-    
-      .media-btn {
-        font-size: 1.1em;
-        margin-right: 8px;
-      }
-    
-      .input-area button {
-        width: 40px;
-        height: 40px;
-        font-size: 1.1em;
-      }
-    
-      .modal-content {
-        padding: 15px;
-      }
-    
-      .modal-content h2 {
-        font-size: 1.3em;
-      }
-    
-      .modal-content input,
-      .modal-content textarea {
-        padding: 10px 12px;
-        font-size: 0.9em;
-      }
-    
-      .modal-content button {
-        padding: 10px 20px;
-        font-size: 0.9em;
-      }
-    
-      .group-members-container {
-        max-height: 120px;
-      }
-    
-      .group-member-item {
-        padding: 8px;
-      }
-    
-      .member-avatar {
-        width: 35px;
-        height: 35px;
-        margin-right: 8px;
-      }
-    }
-    
-    /* Улучшение для очень маленьких экранов (до 360px) */
     @media (max-width: 360px) {
-      .menu-btn {
-        padding: 5px 10px;
-        font-size: 0.8em;
-      }
+        .menu-btn {
+            padding: 5px 10px;
+            font-size: 0.8em;
+        }
     
-      .dropdown-menu {
-        width: 140px;
-        top: 40px;
-      }
+        .dropdown-menu {
+            width: 140px;
+            top: 40px;
+        }
     
-      .contact-avatar {
-        width: 30px;
-        height: 30px;
-      }
+        .contact-avatar {
+            width: 30px;
+            height: 30px;
+        }
     
-      .contact-name {
-        font-size: 0.8em;
-      }
+        .contact-name {
+            font-size: 0.8em;
+        }
     
-      .message {
-        padding: 6px 10px;
-        font-size: 0.85em;
-      }
+        .message {
+            padding: 6px 10px;
+            font-size: 0.85em;
+        }
     
-      .input-area input {
-        padding: 6px 8px;
-      }
+        .input-area input {
+            padding: 6px 8px;
+        }
     
-      .input-area button {
-        width: 35px;
-        height: 35px;
-        font-size: 1em;
-      }
+        .input-area button {
+            width: 35px;
+            height: 35px;
+            font-size: 1em;
+        }
     
-      .modal-content {
-        padding: 10px;
-      }
+        .modal-content {
+            padding: 10px;
+        }
     
-      .modal-content h2 {
-        font-size: 1.2em;
-      }
+        .modal-content h2 {
+            font-size: 1.2em;
+        }
     }
 </style>
 </head>
