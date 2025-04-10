@@ -1338,6 +1338,317 @@
             max-height: 150px;
         }
     }
+        /* Общие стили для телефонов (до 768px) */
+    @media (max-width: 768px) {
+      .container {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        margin: 0;
+      }
+    
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: absolute;
+        top: 0;
+        left: -100%;
+        z-index: 1000;
+        transition: left 0.3s ease;
+      }
+    
+      .sidebar.active {
+        left: 0;
+      }
+    
+      .messenger {
+        width: 100%;
+      }
+    
+      .user-actions {
+        padding: 10px;
+      }
+    
+      .menu-btn {
+        padding: 8px 15px;
+        font-size: 0.9em;
+      }
+    
+      .dropdown-menu {
+        top: 50px;
+        left: 10px;
+        width: 180px;
+      }
+    
+      .search-area input {
+        padding: 10px 35px 10px 12px;
+        font-size: 0.9em;
+      }
+    
+      .contact {
+        padding: 10px 15px;
+      }
+    
+      .contact-avatar {
+        width: 38px;
+        height: 38px;
+        margin-right: 10px;
+      }
+    
+      .contact-name {
+        font-size: 0.9em;
+      }
+    
+      .request-join-btn {
+        padding: 5px 10px;
+        font-size: 0.8em;
+      }
+    
+      .header {
+        padding: 15px;
+        font-size: 1em;
+      }
+    
+      .chat {
+        padding: 15px;
+      }
+    
+      .message {
+        max-width: 85%;
+        padding: 10px 15px;
+      }
+    
+      .input-area {
+        padding: 10px;
+      }
+    
+      .input-area input {
+        padding: 10px 12px;
+        font-size: 0.9em;
+        margin-right: 10px;
+      }
+    
+      .input-area button {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2em;
+      }
+    
+      .media-btn {
+        font-size: 1.2em;
+        margin-right: 10px;
+      }
+    
+      .modal {
+        padding: 10px;
+      }
+    
+      .modal-content {
+        width: 95%;
+        max-height: 90vh;
+        padding: 20px;
+        overflow-y: auto;
+      }
+    
+      .group-modal {
+        padding: 20px;
+      }
+    
+      .modal-content h2 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+      }
+    
+      .modal-buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+    
+      .modal-buttons button {
+        width: 100%;
+        padding: 10px;
+      }
+    }
+    
+    /* Дополнительные улучшения для маленьких экранов (до 480px) */
+    @media (max-width: 480px) {
+      body {
+        font-size: 14px;
+      }
+    
+      .user-actions {
+        padding: 8px;
+      }
+    
+      .menu-btn {
+        padding: 6px 12px;
+        font-size: 0.85em;
+      }
+    
+      .dropdown-menu {
+        top: 45px;
+        width: 160px;
+        padding: 8px;
+      }
+    
+      .dropdown-menu button {
+        padding: 8px 15px;
+        font-size: 0.85em;
+      }
+    
+      .search-area {
+        padding: 8px;
+      }
+    
+      .search-area input {
+        padding: 8px 30px 8px 10px;
+        font-size: 0.85em;
+      }
+    
+      .clear-search-btn {
+        right: 20px;
+        font-size: 1em;
+      }
+    
+      .contact {
+        padding: 8px 12px;
+      }
+    
+      .contact-avatar {
+        width: 35px;
+        height: 35px;
+        margin-right: 8px;
+      }
+    
+      .contact-name {
+        font-size: 0.85em;
+      }
+    
+      #contactList {
+        padding: 5px 0;
+      }
+    
+      .header {
+        padding: 10px;
+        font-size: 0.9em;
+      }
+    
+      .header button {
+        font-size: 1.2em;
+      }
+    
+      .chat {
+        padding: 10px;
+      }
+    
+      .message {
+        padding: 8px 12px;
+        margin-bottom: 10px;
+        font-size: 0.9em;
+      }
+    
+      .message-media {
+        max-width: 150px;
+      }
+    
+      .input-area {
+        padding: 8px;
+      }
+    
+      .input-area input {
+        padding: 8px 10px;
+        font-size: 0.85em;
+      }
+    
+      .media-btn {
+        font-size: 1.1em;
+        margin-right: 8px;
+      }
+    
+      .input-area button {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1em;
+      }
+    
+      .modal-content {
+        padding: 15px;
+      }
+    
+      .modal-content h2 {
+        font-size: 1.3em;
+      }
+    
+      .modal-content input,
+      .modal-content textarea {
+        padding: 10px 12px;
+        font-size: 0.9em;
+      }
+    
+      .modal-content button {
+        padding: 10px 20px;
+        font-size: 0.9em;
+      }
+    
+      .group-members-container {
+        max-height: 120px;
+      }
+    
+      .group-member-item {
+        padding: 8px;
+      }
+    
+      .member-avatar {
+        width: 35px;
+        height: 35px;
+        margin-right: 8px;
+      }
+    }
+    
+    /* Улучшение для очень маленьких экранов (до 360px) */
+    @media (max-width: 360px) {
+      .menu-btn {
+        padding: 5px 10px;
+        font-size: 0.8em;
+      }
+    
+      .dropdown-menu {
+        width: 140px;
+        top: 40px;
+      }
+    
+      .contact-avatar {
+        width: 30px;
+        height: 30px;
+      }
+    
+      .contact-name {
+        font-size: 0.8em;
+      }
+    
+      .message {
+        padding: 6px 10px;
+        font-size: 0.85em;
+      }
+    
+      .input-area input {
+        padding: 6px 8px;
+      }
+    
+      .input-area button {
+        width: 35px;
+        height: 35px;
+        font-size: 1em;
+      }
+    
+      .modal-content {
+        padding: 10px;
+      }
+    
+      .modal-content h2 {
+        font-size: 1.2em;
+      }
+    }
 </style>
 </head>
 <body>
