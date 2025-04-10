@@ -1929,6 +1929,23 @@
         };
     }
     
+    // Функция переключения вида чата
+    function toggleChatView(showChat) {
+        const sidebar = document.getElementById('sidebar');
+        const messenger = document.querySelector('.messenger');
+        const backButton = document.getElementById('backToContactsButton');
+    
+        if (showChat) {
+            sidebar.classList.add('hidden');
+            messenger.classList.add('active');
+            backButton.style.display = 'block';
+        } else {
+            sidebar.classList.remove('hidden');
+            messenger.classList.remove('active');
+            backButton.style.display = 'none';
+        }
+    }
+    
     // Загрузка контактов и групп
     const loadContactsDebounced = debounce(async () => {
         const contactList = document.getElementById('contactList');
@@ -3270,7 +3287,7 @@
     
         document.getElementById('memberActionsModal').style.display = 'none';
         document.getElementById('editGroupModal').style.display = 'none';
-        await selectChat(selectedMemberId, 'user', memberProfile.username);
+        await select LOCKEDChat(selectedMemberId, 'user', memberProfile.username);
     });
     
     // Посмотреть профиль
@@ -3423,6 +3440,11 @@
     
         document.getElementById('chat').innerHTML = '';
         await loadMessages();
+    
+        // Показываем чат и скрываем список контактов на мобильных устройствах
+        if (window.innerWidth <= 768) {
+            toggleChatView(true);
+        }
     
         const channelName = `messages:${type}:${id}`;
         currentSubscription = supabase.channel(channelName);
@@ -3844,21 +3866,6 @@
         }
     });
     
-    // Отмена предпросмотра медиа
-    document.getElementById('cancelMediaPreview').addEventListener('click', () => {
-        const mediaInput = document.getElementById('messageMediaInput');
-        const preview = document.getElementById('mediaPreview');
-        const previewImage = document.getElementById('previewImage');
-        const previewVideo = document.getElementById('previewVideo');
-    
-        mediaInput.value = '';
-        preview.style.display = 'none';
-        previewImage.style.display = 'none';
-        previewVideo.style.display = 'none';
-        previewImage.src = '';
-        previewVideo.src = '';
-    });
-    
     // Отправка сообщения по нажатию Enter
     document.getElementById('messageInput').addEventListener('keypress', (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
@@ -3867,7 +3874,7 @@
         }
     });
     
-    // Обработчик кнопки отправки сообщения
+    // Обработчик кнопки отправки
     document.getElementById('sendMessageBtn').addEventListener('click', sendMessage);
     
     // Обработчик кнопки записи голосового сообщения
@@ -3879,12 +3886,50 @@
             startRecording();
         }
     });
-    document.querySelector('.menu-btn').addEventListener('click', () => {
-      document.querySelector('.sidebar').classList.toggle('active');
+    
+    // Возврат к списку контактов на мобильных устройствах
+    document.getElementById('backToContactsButton').addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+            toggleChatView(false);
+            selectedChat = null;
+            selectedChatType = null;
+            document.getElementById('chat').innerHTML = '';
+            document.getElementById('chatHeader').querySelector('span').textContent = 'Выберите собеседника';
+            document.getElementById('viewContactProfileButton').style.display = 'none';
+            document.getElementById('editGroupButton').style.display = 'none';
+            
+            if (currentSubscription) {
+                supabase.removeChannel(currentSubscription);
+                currentSubscription = null;
+            }
+        }
     });
+    
     // Инициализация приложения
     document.addEventListener('DOMContentLoaded', () => {
         checkUser();
+    
+        // Обработчик изменения размера окна
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                // На больших экранах показываем обе панели
+                document.getElementById('sidebar').classList.remove('hidden');
+                document.querySelector('.messenger').classList.remove('active');
+                document.getElementById('backToContactsButton').style.display = 'none';
+            } else if (selectedChat) {
+                // На мобильных устройствах с выбранным чатом показываем только чат
+                toggleChatView(true);
+            }
+        });
+    });
+    
+    // Обработка изменения статуса аутентификации
+    supabase.auth.onAuthStateChange((event, session) => {
+        if (event === 'SIGNED_IN') {
+            checkUser();
+        } else if (event === 'SIGNED_OUT') {
+            showAuthModal();
+        }
     });
 </script>
 </body>
